@@ -20,4 +20,4 @@
             @endforeach
         </table>
     </body>
-</html>    
+</html>     
