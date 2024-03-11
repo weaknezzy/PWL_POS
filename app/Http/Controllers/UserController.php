@@ -128,6 +128,12 @@ class UserController extends Controller
     //Pratikum 2.6 Create,Read,Update,Delete(CRUD)
         $user = UserModel::all();
         return view('user', ['data' => $user]);
+    //Pratikum 2.7 Relationship
+        // $user = UserModel::with('level')->get();
+        // dd($user);
+
+        // $user = UserModel::with('level')->get();
+        // return view('user', ['data' => $user]);
 }
         public function tambah() 
         {
@@ -163,5 +169,4 @@ class UserController extends Controller
 
         return redirect('/user');
     }
-}
-
+ }
