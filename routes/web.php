@@ -6,7 +6,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 
 Route::get('/level', [LevelController::class,'index']);
 Route::get('/level/tambah', [LevelController::class,'tambah'])->name('level.level_tambah');
@@ -42,3 +43,4 @@ Route::put('/kategori/update/{id}', [KategoriController::class, 'update'])->name
 Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete');
 
 Route::resource('m_user', POSController::class);
+Route::get('/', [WelcomeController::class,'index']);
