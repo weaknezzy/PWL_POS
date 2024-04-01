@@ -150,7 +150,9 @@ class UserController extends Controller
 
         $activeMenu = 'user';
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $level = LevelModel::all();
+
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level,'activeMenu' => $activeMenu]);
     }
     public function tambah()
     {
@@ -206,17 +208,23 @@ class UserController extends Controller
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')->with('level');
 
+        //filter data user berdasarkan level_id
+        if ($request -> level_id) {
+            $users->where('level_id', $request->level_id);
+        }
+
+
         return DataTables::of($users)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($user){
-                $btn ='<a href="'.url('/user/' .$user->user_id).'" class="btn btn-info btn-sm">Detail</a>';
-
-                $btn .= '<a href="'.url('/user/' . $user->user_id . '/edit'). '" class="btn btn-warning btn-sm">Edit</a>';
-
-                $btn .= '<form class="d-inline-block" method="POST" action="'.url('/user/'.$user->user_id).'">'
-                    . csrf_field() .method_field('DELETE') .
-                    '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini?\');">Hapus</button></form>';
-                    return $btn;
+            ->addColumn('aksi', function ($user) {
+                return '<div class="btn-group">' .
+                    '<a href="' . url('/user/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a>' .
+                    '<a href="' . url('/user/' . $user->user_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a>' .
+                    '<form class="d-inline-block" method="POST" action="' . url('/user/' . $user->user_id) . '">' .
+                        csrf_field() . method_field('DELETE') .
+                        '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini?\');">Hapus</button>' .
+                    '</form>' .
+                    '</div>';
             })
             ->rawColumns(['aksi'])
             ->make(true);
