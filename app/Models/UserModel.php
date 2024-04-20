@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class UserModel extends Model
+class UserModel extends Model implements Authenticatable
 {
+    use \Illuminate\Auth\Authenticatable;
     use HasFactory;
 
     protected $table = 'm_users'; // Mendefinisikan nama table yang digunakan oleh model ini
