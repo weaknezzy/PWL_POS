@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\t_penjualan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\t_penjualan_detail;
 
-class t_penjualanController extends Controller
+class t_penjualan_detailController extends Controller
 {
     public function __invoke(Request $request)
     {
             //set validation
             $validator = Validator::make($request->all(), [
                 
-                'user_id' => 'required',
-                'pembeli' => 'required',
-                'penjualan_kode' => 'required',
-                'penjualan_tanggal' => 'required',
+                'penjualan_id' => 'required',
+                'barang_id' => 'required',
+                'harga' => 'required',
+                'jumlah' => 'required',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
@@ -28,12 +28,12 @@ class t_penjualanController extends Controller
             $image = $request->image;
 
             //create user
-            $penjualan = t_penjualan ::create([
+            $penjualan = t_penjualan_detail ::create([
                
-                'user_id' => $request->user_id,
-                'pembeli' => $request->pembeli,
-                'penjualan_kode' => $request->penjualan_kode,
-                'penjualan_tanggal' => $request->penjualan_tanggal,
+                'penjualan_id' => $request->penjualan_id,
+                'barang_id'  => $request->barang_id,
+                'harga' => $request->harga,
+                'jumlah' => $request->jumlah,
                 'image' => $image->hashName(),
             ]);
 
@@ -50,13 +50,12 @@ class t_penjualanController extends Controller
                 'success' => false,
             ], 409);
     }
-
     public function show($id)
     {
-      $barang = t_penjualan::find($id);
-       if (!$barang) {
+      $penjualan = t_penjualan_detail::find($id);
+       if (!$penjualan) {
             return response()->json(['message' => 'Penjualan not found'], 404);
         }
-        return response()->json($barang);
+        return response()->json($penjualan);
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\t_penjualan_detailController;
+use App\Http\Controllers\Api\t_penjualanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,12 @@ Route::delete('barangs/{barang}',[BarangController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
 
-Route::post('/barang1', App\Http\Controllers\Api\BarangController::class)->name('barang1');
+Route::get('/barang/{id}',[BarangController::class, 'show']);
+Route::post('/barang',[BarangController::class, '__invoke'])->name('penjualan1');
 
-Route::post('/penjualan1', App\Http\Controllers\Api\t_penjualanController::class)->name('penjualan1');
+Route::get('/penjualan1/{id}',[t_penjualanController::class, 'show']);
+Route::post('/penjualan1',[t_penjualanController::class, '__invoke'])->name('penjualan1');
+
+// Route::post('/penjualan2', App\Http\Controllers\Api\t_penjualan_detailController::class)->name('penjualan2');
+Route::get('/penjualan2/{id}',[t_penjualan_detailController::class, 'show']);
+Route::post('/penjualan2',[t_penjualan_detailController::class, '__invoke'])->name('penjualan2');

@@ -61,14 +61,14 @@ class BarangController extends Controller
     //     return response()->json($barang, 201);
     // }
 
-    // public function show($id)
-    // {
-    //     $barang = BarangModel::find($id);
-    //     if (!$barang) {
-    //         return response()->json(['message' => 'Barang not found'], 404);
-    //     }
-    //     return response()->json($barang);
-    // }
+     public function show($id)
+    {
+      $barang = BarangModel::find($id);
+       if (!$barang) {
+            return response()->json(['message' => 'Barang not found'], 404);
+        }
+        return response()->json($barang);
+    }
 
 
     // public function update(Request $request, $id)
